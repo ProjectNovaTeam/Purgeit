@@ -3,7 +3,7 @@ package io.github.xniter.purgeit;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.github.xniter.purgeit.commands.PurgeCmd;
-import io.github.xniter.purgeit.utils.WorldGetter;
+import io.github.xniter.purgeit.utils.LevelGetter;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,13 +44,13 @@ public class Purgeit {
     @SubscribeEvent
     public void ServerStarted(ServerStartedEvent event) {
         LOGGER.info("Purge It Successfully Loaded");
-        event.getServer().getAllLevels().forEach(serverLevel -> WorldGetter.worldsGlobal.add(serverLevel));
+        event.getServer().getAllLevels().forEach(serverLevel -> LevelGetter.worldsGlobal.add(serverLevel));
     }
 
     public static void registerPurgeCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
         LiteralCommandNode<CommandSourceStack> cmdTut = dispatcher.register(
                 Commands.literal("purge")
-                        .then(PurgeCmd.register(dispatcher))
+                        .then(PurgeCmd.register())
         );
 
         LOGGER.info("Registering Purge It Command Dispatchers!");
