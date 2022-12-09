@@ -7,6 +7,9 @@ import net.minecraft.world.level.block.entity.TickingBlockEntity;
 
 import java.util.UUID;
 
+/**
+ * @author <a href="https://github.com/Darkere/CrashUtilities/blob/7d57f501bd3b96853a37af8783c57246991866f4/src/main/java/com/darkere/crashutils/WorldUtils.java#L35">Darkere/CrashUtilities#WorldUtils.java</a>
+ */
 public class LevelPosition {
     public BlockPos pos;
     public ResourceKey<Level> type;

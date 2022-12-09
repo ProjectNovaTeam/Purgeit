@@ -3,9 +3,9 @@ package io.github.xniter.purgeit;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.github.xniter.purgeit.commands.PurgeCmd;
-import io.github.xniter.purgeit.utils.LevelGetter;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
@@ -17,6 +17,9 @@ import net.minecraftforge.network.NetworkConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author X_Niter
  */
@@ -26,6 +29,8 @@ public class Purgeit {
     public static final String MOD_ID = "purgeit";
 
     public static final Logger LOGGER = LogManager.getLogger("PurgeIt");
+
+    public static List<ServerLevel> ALL_LEVELS = new ArrayList<>();
 
     public Purgeit() {
         ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY, (a, b) -> true));
@@ -44,7 +49,7 @@ public class Purgeit {
     @SubscribeEvent
     public void ServerStarted(ServerStartedEvent event) {
         LOGGER.info("Purge It Successfully Loaded");
-        event.getServer().getAllLevels().forEach(serverLevel -> LevelGetter.worldsGlobal.add(serverLevel));
+        event.getServer().getAllLevels().forEach(serverLevel -> ALL_LEVELS.add(serverLevel));
     }
 
     public static void registerPurgeCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
